@@ -1,0 +1,74 @@
+{
+  "network": "studionet",
+  "chain_id": 61999,
+  "chain_id_hex": "0xF22F",
+  "rpc": "https://studio.genlayer.com/api",
+  "explorer": "https://explorer-studio.genlayer.com",
+  "studio": "https://studio.genlayer.com/contracts",
+  "deployed_at": "",
+  "owner_address": "",
+  "arbitration": {
+    "contract": "AEGISArbitration",
+    "version": "1.0.0",
+    "contract_address": "0x210Dcf0aAa76FEDD00fEc7bc00243e1539FC0A22",
+    "explorer_url": "https://explorer-studio.genlayer.com/address/0x210Dcf0aAa76FEDD00fEc7bc00243e1539FC0A22",
+    "source_path": "contracts/aegis.py",
+    "deployment_transaction": "",
+    "status": "",
+    "consensus": "",
+    "execution": "",
+    "stdout_empty": true,
+    "stderr_empty": true
+  },
+  "protocol": {
+    "categories": ["freelance", "dao_governance", "marketplace"],
+    "verdicts": ["CLAIMANT_WINS", "RESPONDENT_WINS", "SPLIT_DECISION", "DISMISSED"],
+    "evidence_window_seconds": 86400,
+    "title_bounds": [8, 120],
+    "description_bounds": [20, 4000],
+    "evidence_description_bounds": [4, 1000],
+    "url_max_chars": 500,
+    "amount_max_wei": "1000000000000000000000000",
+    "page_max": 50,
+    "max_evidence_fetch_per_side": 3,
+    "evidence_excerpt_chars": 2500,
+    "economics": "winner sweeps both stakes; split/dismissed refunds each side its own; unjoined respondents lose by default judgment after the evidence window",
+    "settlement": "execute_ruling is permissionless, deterministic and immediate; it survives pause/kill"
+  },
+  "api_surface": {
+    "writes_payable": ["file_dispute", "join_dispute"],
+    "writes": ["submit_evidence", "signal_ready", "request_resolution", "default_judgment", "execute_ruling", "pause", "unpause", "kill"],
+    "views": ["get_dispute", "get_disputes", "get_total_disputes", "view_config"]
+  },
+  "acceptance": {
+    "script": "scripts/e2e-live.mjs",
+    "command": "node scripts/e2e-live.mjs",
+    "flow": ["view_config preflight", "file_dispute (stake locked)", "join_dispute (matching stake)", "signal_ready x2", "request_resolution (validators fetch EVIDENCE_URL live)", "execute_ruling (payout legs asserted)"],
+    "evidence_exhibits": {
+      "claimant_wins": "/evidence/sample-non-payment-admission.html",
+      "respondent_wins": "/evidence/sample-proof-of-payment.html"
+    },
+    "hosted_smoke_test": "scripts/smoke-api.mjs",
+    "docs": ["docs/TESTING.md", "docs/LIVE_CONTRACT_TEST.md"]
+  },
+  "vercel": {
+    "project": "",
+    "framework": "nextjs",
+    "production_deployment_url": "",
+    "status": "",
+    "database": "PostgreSQL (DATABASE_URL env; lazy client, TLS auto for non-local hosts)",
+    "public_env": {
+      "NEXT_PUBLIC_AEGIS_CONTRACT_ADDRESS": "0x210Dcf0aAa76FEDD00fEc7bc00243e1539FC0A22"
+    },
+    "source_repository": "",
+    "source_note": "Fill after the first production deploy; see README → Deploying to Vercel."
+  },
+  "notes": [
+    "This deployment and its client are fixed to the GenLayer Studio network, chain 61999.",
+    "Empty strings are intentionally unfilled: copy deployed_at, owner_address and deployment_transaction from the explorer page of the contract when verifying — no value is invented here.",
+    "The root deployments.json is the machine-readable registry consumed by the dApp (footer chip, e2e-live.mjs fallback); this file is the human-facing deployment record. Keep both in sync.",
+    "Disputes are wei-denominated end to end; dispute ids are 1-based and sequential.",
+    "Rulings are single and final: request_resolution can never run twice on the same dispute; dead evidence links degrade to explicit unreachable notes instead of being trusted.",
+    "scripts/e2e-live.mjs drives the real contract with two funded Studionet wallets; point EVIDENCE_URL at a page you control so the verdict follows what validators fetch."
+  ]
+}

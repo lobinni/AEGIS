@@ -1,0 +1,26 @@
+{
+  "studionet": {
+    "chainId": 61999,
+    "chainIdHex": "0xF22F",
+    "network": "GenLayer Studio",
+    "rpcUrl": "https://studio.genlayer.com/api",
+    "explorer": "https://explorer-studio.genlayer.com",
+    "studioUrl": "https://studio.genlayer.com/contracts",
+    "nativeCurrency": {
+      "name": "GEN",
+      "symbol": "GEN",
+      "decimals": 18
+    },
+    "contracts": {
+      "AEGISArbitration": {
+        "address": "0x210Dcf0aAa76FEDD00fEc7bc00243e1539FC0A22",
+        "explorerUrl": "https://explorer-studio.genlayer.com/address/0x210Dcf0aAa76FEDD00fEc7bc00243e1539FC0A22",
+        "deployer": "",
+        "deployedAt": "",
+        "sourcePath": "contracts/aegis.py",
+        "detailRecord": "deployments/genlayer/aegis-arbitration-studionet.json",
+        "note": "Deployed on the GenLayer Studio network via https://studio.genlayer.com/contracts. Keep AEGIS_CONTRACT_ADDRESS and NEXT_PUBLIC_AEGIS_CONTRACT_ADDRESS in .env in sync with this address. Full deployment record: deployments/genlayer/aegis-arbitration-studionet.json."
+      }
+    }
+  }
+}
